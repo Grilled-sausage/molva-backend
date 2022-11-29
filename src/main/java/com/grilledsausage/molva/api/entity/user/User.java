@@ -1,5 +1,8 @@
 package com.grilledsausage.molva.api.entity.user;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +13,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@NoArgsConstructor
+@Getter
+@Table(name = "User")
 public class User implements UserDetails {
 
     @Id
@@ -17,13 +24,13 @@ public class User implements UserDetails {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "role")
@@ -68,5 +75,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oAuth2Register")
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.role = Role.ROLE_USER;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
