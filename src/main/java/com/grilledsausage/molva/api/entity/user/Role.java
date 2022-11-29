@@ -1,4 +1,4 @@
-package com.grilledsausage.molva.api.entity;
+package com.grilledsausage.molva.api.entity.user;
 
 import org.springframework.security.core.GrantedAuthority;
 
