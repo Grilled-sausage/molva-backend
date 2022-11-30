@@ -27,7 +27,8 @@ public class SecurityConfig {
                     .ignoring()
                     .antMatchers(
                             "/swagger-ui.html",
-                            "/h2-console/**"
+                            "/h2-console/**",
+                            "/api/auth/**"
                     );
         };
 
@@ -38,14 +39,15 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .formLogin().disable()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .and()
                 .headers().frameOptions().disable()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
                 .and()
 //                 .exceptionHandling()
 //                 .authenticationEntryPoint()
