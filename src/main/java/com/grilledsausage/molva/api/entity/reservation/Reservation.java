@@ -2,13 +2,14 @@ package com.grilledsausage.molva.api.entity.reservation;
 
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.user.User;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "Reservation")
 public class Reservation {
