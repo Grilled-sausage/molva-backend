@@ -57,6 +57,12 @@ public class Movie {
 //    양방향 조회가 필요할 때 추가하기
 //    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
 //    private List<Reservation> reservations = new ArrayList<Reservation>();
+//
+//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+//    private List<Rating> ratings = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+//    private List<Participation> participations = new ArrayList<>();
 
     @Builder
     public Movie(Long code, String name, String englishName, Long year, String nation, String genre, String genreList, Long runTime, Double naverRating, Double reviewRating, String story, String image) {
