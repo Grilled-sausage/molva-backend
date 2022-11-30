@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grilledsausage.molva.api.dto.OAuthToken;
 import com.grilledsausage.molva.api.entity.user.UserRepository;
+import com.grilledsausage.molva.exception.custom.InvalidAuthorizationCodeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -51,12 +49,21 @@ public class UserService {
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
-        ResponseEntity<String> accessTokenResponse = rt.exchange(
-                "https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                kakaoTokenRequest,
-                String.class
-        );
+        ResponseEntity<String> accessTokenResponse = null;
+        try {
+            accessTokenResponse = rt.exchange(
+                    "https://kauth.kakao.com/oauth/token",
+                    HttpMethod.POST,
+                    kakaoTokenRequest,
+                    String.class
+            );
+        } catch (RuntimeException e) {
+            throw InvalidAuthorizationCodeException
+                    .builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .message("인가 코드가 유효하지 않습니다.")
+                    .build();
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         OAuthToken oAuthToken = null;
