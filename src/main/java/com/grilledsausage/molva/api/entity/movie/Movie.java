@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "Movie")
 public class Movie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rating_id")
@@ -71,4 +72,5 @@ public class Movie {
         this.story = story;
         this.image = image;
     }
+
 }
