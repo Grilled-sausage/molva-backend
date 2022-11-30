@@ -1,4 +1,4 @@
-package com.grilledsausage.molva.api.dto;
+package com.grilledsausage.molva.api.dto.user;
 
 import lombok.Data;
 

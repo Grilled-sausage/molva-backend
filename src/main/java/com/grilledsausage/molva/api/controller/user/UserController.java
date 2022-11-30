@@ -1,6 +1,6 @@
-package com.grilledsausage.molva.api.controller;
+package com.grilledsausage.molva.api.controller.user;
 
-import com.grilledsausage.molva.api.dto.OAuthToken;
+import com.grilledsausage.molva.api.dto.user.OAuthToken;
 import com.grilledsausage.molva.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
