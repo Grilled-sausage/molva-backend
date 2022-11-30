@@ -1,6 +1,7 @@
 package com.grilledsausage.molva.api.entity.user;
 
 import com.grilledsausage.molva.api.entity.reservation.Reservation;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @Table(name = "User")
 public class User implements UserDetails {
 
