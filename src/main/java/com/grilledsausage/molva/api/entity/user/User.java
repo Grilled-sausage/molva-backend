@@ -1,5 +1,6 @@
 package com.grilledsausage.molva.api.entity.user;
 
+import com.grilledsausage.molva.api.entity.reservation.Reservation;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,8 @@ import java.util.stream.Collectors;
 @Table(name = "User")
 public class User implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private Long id;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private final List<Reservation> reservations = new ArrayList<Reservation>();
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -36,6 +35,10 @@ public class User implements UserDetails {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
