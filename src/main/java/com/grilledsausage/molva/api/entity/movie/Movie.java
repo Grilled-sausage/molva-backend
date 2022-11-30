@@ -1,14 +1,15 @@
 package com.grilledsausage.molva.api.entity.movie;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @Table(name = "Movie")
 public class Movie {
 
