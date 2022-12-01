@@ -170,4 +170,11 @@ public class UserService {
         return userRepository.save(user);
 
     }
+
+    public void deleteUserInfo(User user) {
+
+        userRepository.deleteUserByEmail(user.getEmail());
+
+    }
+
 }
