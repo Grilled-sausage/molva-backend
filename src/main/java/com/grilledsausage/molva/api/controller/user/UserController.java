@@ -45,4 +45,11 @@ public class UserController {
 
     }
 
+    @DeleteMapping("/user/info")
+    public ResponseEntity<UserInfoResponseDto> deleteUserInfo(@AuthenticationPrincipal User user) {
+
+        return ResponseEntity.ok().body(UserInfoResponseDto.from(user));
+
+    }
+
 }
