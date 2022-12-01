@@ -163,4 +163,11 @@ public class UserService {
                 );
     }
 
+    public User putUserInfo(User user, String nickname) {
+
+        user.setNickname(nickname);
+
+        return userRepository.save(user);
+
+    }
 }
