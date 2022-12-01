@@ -10,11 +10,13 @@ import com.grilledsausage.molva.api.entity.user.User;
 import com.grilledsausage.molva.api.entity.user.UserRepository;
 import com.grilledsausage.molva.config.JwtProperties;
 import com.grilledsausage.molva.exception.custom.InvalidAuthorizationCodeException;
+import com.grilledsausage.molva.exception.custom.UserNotFoundByJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -87,6 +89,7 @@ public class UserService {
         return oAuthToken;
     }
 
+    @Transactional
     public String saveUserAndGetToken(String token) {
 
         KakaoProfile profile = findProfile(token);
@@ -146,6 +149,18 @@ public class UserService {
                 .withClaim("email", user.getEmail())
                 .sign(Algorithm.HMAC512(JWT_SECRET));
 
+    }
+
+    @Transactional
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> UserNotFoundByJwtException
+                                .builder()
+                                .httpStatus(HttpStatus.UNAUTHORIZED)
+                                .message("JWT 토큰에서 사용자를 찾을 수 없습니다.")
+                                .build()
+                );
     }
 
 }
