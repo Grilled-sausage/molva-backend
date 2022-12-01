@@ -29,12 +29,10 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return web -> {
-            web
-                    .ignoring()
-                    .antMatchers(
-                            "/swagger-ui.html",
-                            "/h2-console/**"
-                    );
+            web.ignoring().antMatchers(
+                    "/swagger-ui.html",
+                    "/h2-console/**"
+            );
         };
 
     }
