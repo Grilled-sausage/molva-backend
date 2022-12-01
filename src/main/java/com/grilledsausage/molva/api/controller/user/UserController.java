@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,4 +37,12 @@ public class UserController {
         return ResponseEntity.ok().body(UserInfoResponseDto.from(user));
 
     }
+
+    @PutMapping("/user/info")
+    public ResponseEntity<UserInfoResponseDto> putUserInfo(@AuthenticationPrincipal User user, @RequestBody String nickname) {
+
+        return ResponseEntity.ok().body(UserInfoResponseDto.from(userService.putUserInfo(user, nickname)));
+
+    }
+
 }
