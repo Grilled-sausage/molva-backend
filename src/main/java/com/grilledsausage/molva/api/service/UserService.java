@@ -163,6 +163,7 @@ public class UserService {
                 );
     }
 
+    @Transactional
     public User putUserInfo(User user, String nickname) {
 
         user.setNickname(nickname);
@@ -171,6 +172,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public void deleteUserInfo(User user) {
 
         userRepository.deleteUserByEmail(user.getEmail());
