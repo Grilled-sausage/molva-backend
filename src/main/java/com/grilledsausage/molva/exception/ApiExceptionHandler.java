@@ -16,7 +16,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity<ApiException> handleUserNotExistException(CustomException e) {
 
-        log.error(e.getMessage());
+        log.error("Unexpected Exception occurred: {}", e.getMessage(), e);
 
         HttpStatus httpStatus = e.getHttpStatus();
 
