@@ -2,7 +2,10 @@ package com.grilledsausage.molva.api.controller.user;
 
 import com.grilledsausage.molva.api.dto.user.OAuthToken;
 import com.grilledsausage.molva.api.service.UserService;
+import com.grilledsausage.molva.config.JwtProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +19,15 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/auth/token")
-    public OAuthToken getLogin(@RequestParam("code") String code) {
+    public ResponseEntity<String> getLogin(@RequestParam("code") String code) {
 
-        return userService.getAccessToken(code);
+        OAuthToken oAuthToken = userService.getAccessToken(code);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX
+                + userService.saveUserAndGetToken(oAuthToken.getAccess_token()));
+
+        return ResponseEntity.ok().headers(headers).body("");
 
     }
 }
