@@ -1,5 +1,6 @@
 package com.grilledsausage.molva.config;
 
+import com.grilledsausage.molva.api.service.user.UserService;
 import com.grilledsausage.molva.exception.ExceptionHandlerFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +22,8 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtRequestFilter jwtRequestFilter;
-
-    private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final JwtProperties jwtProperties;
+    private final UserService userService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -31,7 +31,8 @@ public class SecurityConfig {
         return web -> {
             web.ignoring().antMatchers(
                     "/swagger-ui.html",
-                    "/h2-console/**"
+                    "/h2-console/**",
+                    "/api/auth/token"
             );
         };
 
@@ -54,8 +55,8 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(exceptionHandlerFilter, JwtRequestFilter.class)
+                .addFilterBefore(new JwtRequestFilter(jwtProperties, userService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ExceptionHandlerFilter(), JwtRequestFilter.class)
 //                 .exceptionHandling()
 //                 .authenticationEntryPoint()
 //                 .accessDeniedHandler()

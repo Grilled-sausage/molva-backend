@@ -54,6 +54,9 @@ public class Movie {
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
+    @Column(name = "is_in_survey", nullable = false)
+    private Boolean isInSurvey;
+
 //    양방향 조회가 필요할 때 추가하기
 //    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
 //    private List<Reservation> reservations = new ArrayList<Reservation>();
@@ -65,7 +68,7 @@ public class Movie {
 //    private List<Participation> participations = new ArrayList<>();
 
     @Builder
-    public Movie(Long code, String name, String englishName, Long year, String nation, String genre, String genreList, Long runTime, Double naverRating, Double reviewRating, String story, String image) {
+    public Movie(Long code, String name, String englishName, Long year, String nation, String genre, String genreList, Long runTime, Double naverRating, Double reviewRating, String story, String image, Boolean isInSurvey) {
         this.code = code;
         this.name = name;
         this.englishName = englishName;
@@ -78,6 +81,7 @@ public class Movie {
         this.reviewRating = reviewRating;
         this.story = story;
         this.image = image;
+        this.isInSurvey = isInSurvey;
     }
 
 }

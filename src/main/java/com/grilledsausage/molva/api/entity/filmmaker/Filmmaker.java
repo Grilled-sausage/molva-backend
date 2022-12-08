@@ -2,6 +2,7 @@ package com.grilledsausage.molva.api.entity.filmmaker;
 
 import com.grilledsausage.molva.api.entity.participation.Participation;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,7 +30,23 @@ public class Filmmaker {
     @Column(name = "type", nullable = false)
     private String type;
 
+    @Column(name = "image", columnDefinition = "TEXT")
+    private String image;
+
+    @Column(name = "is_in_survey", nullable = false)
+    private Boolean isInSurvey;
+
     @OneToMany(mappedBy = "filmmaker", fetch = FetchType.LAZY)
     private List<Participation> participations = new ArrayList<>();
+
+    @Builder
+    public Filmmaker(Long id, Long code, String name, String type, String image, Boolean isInSurvey) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.image = image;
+        this.isInSurvey = isInSurvey;
+    }
 
 }
