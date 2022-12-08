@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.grilledsausage.molva.api.entity.user.User;
-import com.grilledsausage.molva.api.service.UserService;
+import com.grilledsausage.molva.api.service.user.UserService;
 import com.grilledsausage.molva.exception.custom.InvalidJwtTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

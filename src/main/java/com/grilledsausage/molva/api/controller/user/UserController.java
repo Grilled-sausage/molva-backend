@@ -3,7 +3,7 @@ package com.grilledsausage.molva.api.controller.user;
 import com.grilledsausage.molva.api.dto.user.OAuthToken;
 import com.grilledsausage.molva.api.dto.user.UserInfoResponseDto;
 import com.grilledsausage.molva.api.entity.user.User;
-import com.grilledsausage.molva.api.service.UserService;
+import com.grilledsausage.molva.api.service.user.UserService;
 import com.grilledsausage.molva.config.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

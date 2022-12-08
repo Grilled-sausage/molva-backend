@@ -1,4 +1,4 @@
-package com.grilledsausage.molva.api.service;
+package com.grilledsausage.molva.api.service.user;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
