@@ -9,7 +9,6 @@ import com.grilledsausage.molva.api.service.user.UserService;
 import com.grilledsausage.molva.exception.custom.InvalidJwtTokenException;
 import com.grilledsausage.molva.exception.custom.NoJwtTokenException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,10 +23,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+    private final JwtProperties jwtProperties;
     private final UserService userService;
-
-    @Value("${jwt.secret}")
-    private String JWT_SECRET;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -46,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String email = null;
 
         try {
-            email = JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(token)
+            email = JWT.require(Algorithm.HMAC512(jwtProperties.SECRET)).build().verify(token)
                     .getClaim("email").asString();
 
         } catch (TokenExpiredException e) {

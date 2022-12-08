@@ -22,6 +22,7 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final JwtProperties jwtProperties;
     private final UserService userService;
 
     @Bean
@@ -30,7 +31,8 @@ public class SecurityConfig {
         return web -> {
             web.ignoring().antMatchers(
                     "/swagger-ui.html",
-                    "/h2-console/**"
+                    "/h2-console/**",
+                    "/api/auth/token"
             );
         };
 
@@ -53,7 +55,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtRequestFilter(userService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtRequestFilter(jwtProperties, userService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtRequestFilter.class)
 //                 .exceptionHandling()
 //                 .authenticationEntryPoint()
