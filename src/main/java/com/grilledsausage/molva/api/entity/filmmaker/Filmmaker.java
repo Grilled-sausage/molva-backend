@@ -29,6 +29,9 @@ public class Filmmaker {
     @Column(name = "type", nullable = false)
     private String type;
 
+    @Column(name = "is_in_survey", nullable = false)
+    private Boolean isInSurvey;
+
     @OneToMany(mappedBy = "filmmaker", fetch = FetchType.LAZY)
     private List<Participation> participations = new ArrayList<>();
 

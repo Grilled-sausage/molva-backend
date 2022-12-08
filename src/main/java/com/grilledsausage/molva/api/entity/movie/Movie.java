@@ -54,6 +54,9 @@ public class Movie {
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
+    @Column(name = "is_in_survey", nullable = false)
+    private Boolean isInSurvey;
+
 //    양방향 조회가 필요할 때 추가하기
 //    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
 //    private List<Reservation> reservations = new ArrayList<Reservation>();
