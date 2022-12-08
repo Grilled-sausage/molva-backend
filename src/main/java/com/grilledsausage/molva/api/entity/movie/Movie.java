@@ -68,7 +68,7 @@ public class Movie {
 //    private List<Participation> participations = new ArrayList<>();
 
     @Builder
-    public Movie(Long code, String name, String englishName, Long year, String nation, String genre, String genreList, Long runTime, Double naverRating, Double reviewRating, String story, String image) {
+    public Movie(Long code, String name, String englishName, Long year, String nation, String genre, String genreList, Long runTime, Double naverRating, Double reviewRating, String story, String image, Boolean isInSurvey) {
         this.code = code;
         this.name = name;
         this.englishName = englishName;
@@ -81,6 +81,7 @@ public class Movie {
         this.reviewRating = reviewRating;
         this.story = story;
         this.image = image;
+        this.isInSurvey = isInSurvey;
     }
 
 }
