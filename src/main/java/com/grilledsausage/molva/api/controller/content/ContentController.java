@@ -1,5 +1,6 @@
 package com.grilledsausage.molva.api.controller.content;
 
+import com.grilledsausage.molva.api.dto.content.SurveyFilmmakerResponseDto;
 import com.grilledsausage.molva.api.dto.content.SurveyMovieResponseDto;
 import com.grilledsausage.molva.api.service.content.ContentService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class ContentController {
     public List<SurveyMovieResponseDto> getSurveyMovieList() {
 
         return contentService.getSurveyMovieList();
+    }
+
+    @GetMapping("/survey/filmmaker")
+    public List<SurveyFilmmakerResponseDto> getSurveyFilmmakerList() {
+
+        return contentService.getSurveyFilmmakerList();
     }
 
 }
