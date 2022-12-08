@@ -55,24 +55,6 @@ public class InitDatabaseForLocal {
             user2.setNickname("say_hi");
             userRepository.save(user2);
 
-
-//            20228230,요정,Fairy,2022,한국,드라마,드라마,79
-//            20224755,나는 마을 방과후 교사입니다,"The Teachers: pink, nature trail, ridge between rice paddies, plum",2022,한국,다큐멘터리,다큐멘터리,94
-//            20228915,사랑하는 당신에게,Last Dance,2022,스위스,드라마,드라마,82
-//            20196478,영웅,Hero,2022,한국,드라마,"드라마,뮤지컬",120
-//            20229052,러브 플랫폼,The moment fall in love,2022,한국,드라마,드라마,
-//                    19978205,암화,The Longest Nite,1997,홍콩,범죄,"범죄,스릴러",82
-//            20228895,캐리와 슈퍼콜라,CARRIE&SUPERKOLA,2022,한국,애니메이션,애니메이션,79
-//            20193581,감각의 제국 감독판,In the Realm of the Senses,1976,프랑스,드라마,"드라마,성인물(에로)",101
-//            20228612,팬픽에서 연애까지,,2022,한국,멜로/로맨스,"멜로/로맨스,코미디",89
-//            20204264,콘크리트 유토피아,,2021,한국,스릴러,스릴러,
-//                    20226411,범죄도시3,THE ROUNDUP : NO WAY OUT,2022,한국,범죄,"범죄,액션",
-//                    20229059,슬로우,Slow,2021,한국,드라마,드라마,3
-//            20229049,"다시, 만남",MEET AGAIN,2022,한국,드라마,드라마,3
-//            20229058,미스터 플라스틱의 하루,A Day of Mr. Plastic,2022,한국,애니메이션,애니메이션,2
-//            20204548,범죄도시2,The Roundup,2022,한국,범죄,"범죄,액션",105
-//            20229048,엄마의 산책,A comfortable moments,2022,한국,드라마,드라마,1
-
             Movie movie1 = Movie
                     .builder()
                     .code(20228230L)
@@ -117,6 +99,36 @@ public class InitDatabaseForLocal {
                     .build();
 
             movieRepository.save(movie3);
+//
+//            Filmmaker filmmaker1 = Filmmaker
+//                    .builder()
+//                    .code(1L)
+//                    .name("김민근")
+//                    .type("배우")
+//                    .isInSurvey(true)
+//                    .build();
+//
+//            filmmakerRepository.save(filmmaker1);
+//
+//            Filmmaker filmmaker2 = Filmmaker
+//                    .builder()
+//                    .code(2L)
+//                    .name("윤석민")
+//                    .type("감독")
+//                    .isInSurvey(true)
+//                    .build();
+//
+//            filmmakerRepository.save(filmmaker2);
+//
+//            Filmmaker filmmaker3 = Filmmaker
+//                    .builder()
+//                    .code(3L)
+//                    .name("박동진")
+//                    .type("배우")
+//                    .isInSurvey(false)
+//                    .build();
+//
+//            filmmakerRepository.save(filmmaker3);
         }
 
     }
