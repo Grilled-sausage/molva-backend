@@ -1,11 +1,18 @@
 package com.grilledsausage.molva.config;
 
-public interface JwtProperties {
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-    int EXPIRATION_TIME = 864000000;
+@Component
+public class JwtProperties {
 
-    String TOKEN_PREFIX = "Bearer ";
+    public static final int EXPIRATION_TIME = 864000000;
 
-    String HEADER_STRING = "Authorization";
+    public static final String TOKEN_PREFIX = "Bearer ";
+
+    public static final String HEADER_STRING = "Authorization";
+
+    @Value("${jwt.secret}")
+    public String SECRET;
 
 }

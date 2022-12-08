@@ -6,7 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.grilledsausage.molva.exception.custom.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -18,7 +17,6 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Slf4j
-@Component
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Override
