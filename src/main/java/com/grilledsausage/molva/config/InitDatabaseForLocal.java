@@ -1,5 +1,6 @@
 package com.grilledsausage.molva.config;
 
+import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
 import com.grilledsausage.molva.api.entity.filmmaker.FilmmakerRepository;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.movie.MovieRepository;
@@ -99,36 +100,36 @@ public class InitDatabaseForLocal {
                     .build();
 
             movieRepository.save(movie3);
-//
-//            Filmmaker filmmaker1 = Filmmaker
-//                    .builder()
-//                    .code(1L)
-//                    .name("김민근")
-//                    .type("배우")
-//                    .isInSurvey(true)
-//                    .build();
-//
-//            filmmakerRepository.save(filmmaker1);
-//
-//            Filmmaker filmmaker2 = Filmmaker
-//                    .builder()
-//                    .code(2L)
-//                    .name("윤석민")
-//                    .type("감독")
-//                    .isInSurvey(true)
-//                    .build();
-//
-//            filmmakerRepository.save(filmmaker2);
-//
-//            Filmmaker filmmaker3 = Filmmaker
-//                    .builder()
-//                    .code(3L)
-//                    .name("박동진")
-//                    .type("배우")
-//                    .isInSurvey(false)
-//                    .build();
-//
-//            filmmakerRepository.save(filmmaker3);
+
+            Filmmaker filmmaker1 = Filmmaker
+                    .builder()
+                    .code(1L)
+                    .name("김민근")
+                    .type("배우")
+                    .isInSurvey(true)
+                    .build();
+
+            filmmakerRepository.save(filmmaker1);
+
+            Filmmaker filmmaker2 = Filmmaker
+                    .builder()
+                    .code(2L)
+                    .name("윤석민")
+                    .type("감독")
+                    .isInSurvey(true)
+                    .build();
+
+            filmmakerRepository.save(filmmaker2);
+
+            Filmmaker filmmaker3 = Filmmaker
+                    .builder()
+                    .code(3L)
+                    .name("박동진")
+                    .type("배우")
+                    .isInSurvey(false)
+                    .build();
+
+            filmmakerRepository.save(filmmaker3);
         }
 
     }
