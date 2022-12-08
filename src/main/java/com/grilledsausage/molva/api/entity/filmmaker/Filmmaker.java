@@ -2,6 +2,7 @@ package com.grilledsausage.molva.api.entity.filmmaker;
 
 import com.grilledsausage.molva.api.entity.participation.Participation;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,5 +35,14 @@ public class Filmmaker {
 
     @OneToMany(mappedBy = "filmmaker", fetch = FetchType.LAZY)
     private List<Participation> participations = new ArrayList<>();
+
+    @Builder
+    public Filmmaker(Long id, Long code, String name, String type, Boolean isInSurvey) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.isInSurvey = isInSurvey;
+    }
 
 }
