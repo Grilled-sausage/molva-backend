@@ -30,6 +30,9 @@ public class Filmmaker {
     @Column(name = "type", nullable = false)
     private String type;
 
+    @Column(name = "image", columnDefinition = "TEXT")
+    private String image;
+
     @Column(name = "is_in_survey", nullable = false)
     private Boolean isInSurvey;
 
@@ -37,11 +40,12 @@ public class Filmmaker {
     private List<Participation> participations = new ArrayList<>();
 
     @Builder
-    public Filmmaker(Long id, Long code, String name, String type, Boolean isInSurvey) {
+    public Filmmaker(Long id, Long code, String name, String type, String image, Boolean isInSurvey) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.type = type;
+        this.image = image;
         this.isInSurvey = isInSurvey;
     }
 
