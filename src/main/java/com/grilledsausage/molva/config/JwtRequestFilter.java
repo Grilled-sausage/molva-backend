@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.grilledsausage.molva.api.entity.user.User;
 import com.grilledsausage.molva.api.service.user.UserService;
 import com.grilledsausage.molva.exception.custom.InvalidJwtTokenException;
+import com.grilledsausage.molva.exception.custom.NoJwtTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
 
         if (jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            filterChain.doFilter(request, response);
-            return;
+            throw NoJwtTokenException.builder()
+                    .httpStatus(HttpStatus.FORBIDDEN)
+                    .message("JWT가 HTTP 헤더에 존재하지 않습니다.")
+                    .build();
         }
 
         String token = jwtHeader.replace(JwtProperties.TOKEN_PREFIX, "");
