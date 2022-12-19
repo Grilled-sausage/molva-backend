@@ -36,6 +36,7 @@ public class RatingService {
                 .movie(movieFromDto)
                 .userRating(movieRatingRequestDto.getMovieRating())
                 .build();
+
     }
 
 }
