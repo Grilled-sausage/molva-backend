@@ -3,6 +3,7 @@ package com.grilledsausage.molva.api.entity.rating;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.user.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,11 @@ public class Rating {
     @Column(name = "user_rating", nullable = false)
     private Double userRating;
 
+    @Builder
+    public Rating(Long id, User user, Movie movie, Double userRating) {
+        this.id = id;
+        this.user = user;
+        this.movie = movie;
+        this.userRating = userRating;
+    }
 }
