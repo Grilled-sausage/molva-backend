@@ -1,7 +1,7 @@
 package com.grilledsausage.molva.api.dto.preference;
 
 
-import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
+import com.grilledsausage.molva.api.entity.preference.Preference;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,15 +30,15 @@ public class FilmmakerPreferenceResponseDto {
         this.isInSurvey = isInSurvey;
     }
 
-    public static FilmmakerPreferenceResponseDto from(Filmmaker filmmaker) {
+    public static FilmmakerPreferenceResponseDto from(Preference preference) {
         return FilmmakerPreferenceResponseDto
                 .builder()
-                .id(filmmaker.getId())
-                .code(filmmaker.getCode())
-                .name(filmmaker.getName())
-                .type(filmmaker.getType())
-                .image(filmmaker.getImage())
-                .isInSurvey(filmmaker.getIsInSurvey())
+                .id(preference.getFilmmaker().getId())
+                .code(preference.getFilmmaker().getCode())
+                .name(preference.getFilmmaker().getName())
+                .type(preference.getFilmmaker().getType())
+                .image(preference.getFilmmaker().getImage())
+                .isInSurvey(preference.getFilmmaker().getIsInSurvey())
                 .build();
     }
 
