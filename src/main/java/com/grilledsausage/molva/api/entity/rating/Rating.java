@@ -32,8 +32,7 @@ public class Rating {
     private Double userRating;
 
     @Builder
-    public Rating(Long id, User user, Movie movie, Double userRating) {
-        this.id = id;
+    public Rating(User user, Movie movie, Double userRating) {
         this.user = user;
         this.movie = movie;
         this.userRating = userRating;
