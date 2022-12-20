@@ -33,10 +33,11 @@ public class PreferenceService {
                                 .build()
                 );
 
-        return Preference.builder()
+        return preferenceRepository.save(Preference.builder()
                 .user(user)
                 .filmmaker(filmmakerFromId)
-                .build();
+                .build()
+        );
 
     }
 
