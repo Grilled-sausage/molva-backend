@@ -33,11 +33,12 @@ public class RatingService {
                                 .build()
                 );
 
-        return Rating.builder()
+        return ratingRepository.save(Rating.builder()
                 .user(user)
                 .movie(movieFromDto)
                 .userRating(movieRatingRequestDto.getMovieRating())
-                .build();
+                .build()
+        );
 
     }
 
