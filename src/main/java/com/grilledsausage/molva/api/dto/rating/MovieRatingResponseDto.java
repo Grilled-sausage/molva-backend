@@ -7,15 +7,15 @@ import lombok.Data;
 @Data
 public class MovieRatingResponseDto {
 
-    Long id;
+    private Long id;
 
-    Long code;
+    private Long code;
 
-    String name;
+    private String name;
 
-    String image;
+    private String image;
 
-    Double rating;
+    private Double rating;
 
     @Builder
     public MovieRatingResponseDto(Long id, Long code, String name, String image, Double rating) {
