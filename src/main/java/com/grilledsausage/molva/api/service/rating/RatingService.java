@@ -10,6 +10,7 @@ import com.grilledsausage.molva.exception.custom.MovieNotFoundByIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +20,7 @@ public class RatingService {
 
     private final MovieRepository movieRepository;
 
+    @Transactional
     public Rating rateMovie(User user, MovieRatingRequestDto movieRatingRequestDto) {
 
         Movie movieFromDto = movieRepository
