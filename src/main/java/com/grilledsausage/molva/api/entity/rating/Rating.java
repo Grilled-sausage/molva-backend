@@ -31,6 +31,10 @@ public class Rating {
     @Column(name = "user_rating", nullable = false)
     private Double userRating;
 
+    public void setUserRating(Double userRating) {
+        this.userRating = userRating;
+    }
+
     @Builder
     public Rating(User user, Movie movie, Double userRating) {
         this.user = user;
