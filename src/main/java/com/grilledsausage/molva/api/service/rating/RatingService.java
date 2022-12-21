@@ -39,7 +39,7 @@ public class RatingService {
 
     }
 
-    public void validateValue(MovieRatingRequestDto movieRatingRequestDto) {
+    private void validateValue(MovieRatingRequestDto movieRatingRequestDto) {
 
         if (movieRatingRequestDto.getMovieRating() > 5.0 || movieRatingRequestDto.getMovieRating() < 0.0) {
             throw ValueOutOfBoundaryException
@@ -51,7 +51,7 @@ public class RatingService {
 
     }
 
-    public Long getExistingRatingId(User user, MovieRatingRequestDto movieRatingRequestDto) {
+    private Long getExistingRatingId(User user, MovieRatingRequestDto movieRatingRequestDto) {
 
         Optional<Rating> ratingFromDto = ratingRepository.findByUser_IdAndMovie_Id(user.getId(), movieRatingRequestDto.getMovieId());
 
@@ -64,7 +64,7 @@ public class RatingService {
     }
 
     @Transactional
-    public Rating makeNewRating(User user, MovieRatingRequestDto movieRatingRequestDto) {
+    private Rating makeNewRating(User user, MovieRatingRequestDto movieRatingRequestDto) {
 
         Movie movieFromDto = movieRepository
                 .findById(movieRatingRequestDto.getMovieId())
@@ -86,7 +86,7 @@ public class RatingService {
     }
 
     @Transactional
-    public Rating updateExistingRating(MovieRatingRequestDto movieRatingRequestDto, Long existingRatingId) {
+    private Rating updateExistingRating(MovieRatingRequestDto movieRatingRequestDto, Long existingRatingId) {
 
         Rating existingRating = ratingRepository.findById(existingRatingId).orElseThrow(
                 () -> RatingNotFoundByIdException
