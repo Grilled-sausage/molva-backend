@@ -24,6 +24,7 @@ public class RatingService {
 
     private final MovieRepository movieRepository;
 
+    @Transactional
     public Rating rateMovie(User user, MovieRatingRequestDto movieRatingRequestDto) {
 
         Long existingRatingId = getExistingRatingId(user, movieRatingRequestDto);
@@ -33,7 +34,7 @@ public class RatingService {
         if (existingRatingId == -1) {
             return makeNewRating(user, movieRatingRequestDto);
         } else {
-            return updateExistingRating(user, movieRatingRequestDto, existingRatingId);
+            return updateExistingRating(movieRatingRequestDto, existingRatingId);
         }
 
     }
@@ -85,7 +86,7 @@ public class RatingService {
     }
 
     @Transactional
-    public Rating updateExistingRating(User user, MovieRatingRequestDto movieRatingRequestDto, Long existingRatingId) {
+    public Rating updateExistingRating(MovieRatingRequestDto movieRatingRequestDto, Long existingRatingId) {
 
         Rating existingRating = ratingRepository.findById(existingRatingId).orElseThrow(
                 () -> RatingNotFoundByIdException
