@@ -64,7 +64,7 @@ public class RatingService {
     }
 
     @Transactional
-    private Rating makeNewRating(User user, MovieRatingRequestDto movieRatingRequestDto) {
+    protected Rating makeNewRating(User user, MovieRatingRequestDto movieRatingRequestDto) {
 
         Movie movieFromDto = movieRepository
                 .findById(movieRatingRequestDto.getMovieId())
@@ -86,7 +86,7 @@ public class RatingService {
     }
 
     @Transactional
-    private Rating updateExistingRating(MovieRatingRequestDto movieRatingRequestDto, Long existingRatingId) {
+    protected Rating updateExistingRating(MovieRatingRequestDto movieRatingRequestDto, Long existingRatingId) {
 
         Rating existingRating = ratingRepository.findById(existingRatingId).orElseThrow(
                 () -> RatingNotFoundByIdException
