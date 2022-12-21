@@ -3,6 +3,7 @@ package com.grilledsausage.molva.api.entity.reservation;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.user.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,9 @@ public class Reservation {
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
+    @Builder
+    public Reservation(User user, Movie movie) {
+        this.user = user;
+        this.movie = movie;
+    }
 }
