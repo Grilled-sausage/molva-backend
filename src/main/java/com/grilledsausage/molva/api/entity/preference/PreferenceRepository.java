@@ -8,4 +8,6 @@ public interface PreferenceRepository extends JpaRepository<Preference, Long> {
 
     Optional<Preference> findByUser_IdAndFilmmaker_Id(Long userId, Long filmmaker_id);
 
+    Boolean existsByUser_IdAndFilmmaker_Id(Long userId, Long filmmaker_id);
+
 }
