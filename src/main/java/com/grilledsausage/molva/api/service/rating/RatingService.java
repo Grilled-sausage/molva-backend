@@ -63,6 +63,18 @@ public class RatingService {
 
     }
 
+    private Long getExistingRatingId(User user, Long movieId) {
+
+        Optional<Rating> ratingFromDto = ratingRepository.findByUser_IdAndMovie_Id(user.getId(), movieId);
+
+        if (ratingFromDto.isEmpty()) {
+            return -1L;
+        }
+
+        return ratingFromDto.get().getId();
+
+    }
+
     @Transactional
     protected Rating makeNewRating(User user, MovieRatingRequestDto movieRatingRequestDto) {
 
@@ -102,4 +114,19 @@ public class RatingService {
 
     }
 
+    @Transactional
+    public void cancelRatingMovie(User user, Long movieId) {
+        Long existingRatingId = getExistingRatingId(user, movieId);
+
+        if (existingRatingId != -1L) {
+            ratingRepository.deleteById(existingRatingId);
+        } else {
+            throw RatingNotFoundByIdException
+                    .builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .message("ratingId에 해당하는 영화 선호 정보를 찾을 수 없습니다.")
+                    .build();
+        }
+
+    }
 }
