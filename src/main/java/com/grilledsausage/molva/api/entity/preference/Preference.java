@@ -1,6 +1,6 @@
-package com.grilledsausage.molva.api.entity.reservation;
+package com.grilledsausage.molva.api.entity.preference;
 
-import com.grilledsausage.molva.api.entity.movie.Movie;
+import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
 import com.grilledsausage.molva.api.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,12 +12,12 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Reservation")
-public class Reservation {
+@Table(name = "Preference")
+public class Preference {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "res_id")
+    @Column(name = "pref_id")
     private Long id;
 
     @ManyToOne
@@ -25,12 +25,12 @@ public class Reservation {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id", nullable = false)
-    private Movie movie;
+    @JoinColumn(name = "filmmaker_id", nullable = false)
+    private Filmmaker filmmaker;
 
     @Builder
-    public Reservation(User user, Movie movie) {
+    public Preference(User user, Filmmaker filmmaker) {
         this.user = user;
-        this.movie = movie;
+        this.filmmaker = filmmaker;
     }
 }
