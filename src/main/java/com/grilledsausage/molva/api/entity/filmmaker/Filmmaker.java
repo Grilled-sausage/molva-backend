@@ -18,7 +18,7 @@ public class Filmmaker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "filmmaker_id", nullable = false)
+    @Column(name = "filmmaker_id")
     private Long id;
 
     @Column(name = "code", nullable = false, unique = true)
@@ -40,8 +40,7 @@ public class Filmmaker {
     private List<Participation> participations = new ArrayList<>();
 
     @Builder
-    public Filmmaker(Long id, Long code, String name, String type, String image, Boolean isInSurvey) {
-        this.id = id;
+    public Filmmaker(Long code, String name, String type, String image, Boolean isInSurvey) {
         this.code = code;
         this.name = name;
         this.type = type;

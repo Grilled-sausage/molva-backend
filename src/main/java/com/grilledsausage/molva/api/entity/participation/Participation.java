@@ -3,6 +3,7 @@ package com.grilledsausage.molva.api.entity.participation;
 import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +17,7 @@ public class Participation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "participation_id", nullable = false)
+    @Column(name = "participation_id")
     private Long id;
 
     @ManyToOne
@@ -27,4 +28,9 @@ public class Participation {
     @JoinColumn(name = "filmmaker_id", nullable = false)
     private Filmmaker filmmaker;
 
+    @Builder
+    public Participation(Movie movie, Filmmaker filmmaker) {
+        this.movie = movie;
+        this.filmmaker = filmmaker;
+    }
 }

@@ -1,5 +1,6 @@
 package com.grilledsausage.molva.api.entity.user;
 
+import com.grilledsausage.molva.api.entity.preference.Preference;
 import com.grilledsausage.molva.api.entity.rating.Rating;
 import com.grilledsausage.molva.api.entity.reservation.Reservation;
 import lombok.AccessLevel;
@@ -45,6 +46,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rating> ratings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Preference> preferences = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

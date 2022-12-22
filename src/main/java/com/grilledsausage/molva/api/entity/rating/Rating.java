@@ -3,6 +3,7 @@ package com.grilledsausage.molva.api.entity.rating;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.user.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,12 +12,12 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Reservation")
+@Table(name = "Rating")
 public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rating_id", nullable = false)
+    @Column(name = "rating_id")
     private Long id;
 
     @ManyToOne
@@ -30,4 +31,14 @@ public class Rating {
     @Column(name = "user_rating", nullable = false)
     private Double userRating;
 
+    public void setUserRating(Double userRating) {
+        this.userRating = userRating;
+    }
+
+    @Builder
+    public Rating(User user, Movie movie, Double userRating) {
+        this.user = user;
+        this.movie = movie;
+        this.userRating = userRating;
+    }
 }
