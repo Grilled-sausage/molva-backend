@@ -23,7 +23,7 @@ public class PreferenceController {
     }
 
     @DeleteMapping("/filmmaker")
-    public ResponseEntity<String> deleteFilmmaker(@AuthenticationPrincipal User user, @RequestBody Long filmmakerId) {
+    public ResponseEntity<String> cancelPreferringFilmmaker(@AuthenticationPrincipal User user, @RequestBody Long filmmakerId) {
 
         preferenceService.cancelPreferringFilmmaker(user, filmmakerId);
 
