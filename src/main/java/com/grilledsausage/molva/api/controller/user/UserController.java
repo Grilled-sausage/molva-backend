@@ -6,12 +6,14 @@ import com.grilledsausage.molva.api.entity.user.User;
 import com.grilledsausage.molva.api.service.user.UserService;
 import com.grilledsausage.molva.config.JwtProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
+@Slf4j
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api")
@@ -23,12 +25,15 @@ public class UserController {
     public ResponseEntity<String> getLogin(@RequestParam("code") String code) {
 
         OAuthToken oAuthToken = userService.getAccessToken(code);
+        log.info("AccessToken 발급 완료.");
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX
                 + userService.saveUserAndGetToken(oAuthToken.getAccess_token()));
+        log.info("User 저장 후 JWT 발급 완료.");
 
-        return ResponseEntity.ok().headers(headers).body("");
+
+        return ResponseEntity.ok().headers(headers).body("success");
 
     }
 
