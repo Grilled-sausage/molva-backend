@@ -31,7 +31,7 @@ public class PreferenceService {
             throw DuplicatedPreferenceException
                     .builder()
                     .httpStatus(HttpStatus.BAD_REQUEST)
-                    .message("이미 동일한 사용자가 동일한 영화를 선호하고 있습니다.")
+                    .message("이미 동일한 사용자가 동일한 영화인을 선호하고 있습니다.")
                     .build();
         }
 
