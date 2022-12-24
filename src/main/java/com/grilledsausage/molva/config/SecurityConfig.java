@@ -42,7 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf().and().cors().disable()
+                .csrf().disable()
                 .formLogin().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/token").permitAll()
@@ -60,7 +60,7 @@ public class SecurityConfig {
 //                 .exceptionHandling()
 //                 .authenticationEntryPoint()
 //                 .accessDeniedHandler()
-//                .cors().configurationSource(corsConfigurationSource())
+                .cors().configurationSource(corsConfigurationSource())
         ;
 
         return http.build();
@@ -75,6 +75,7 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 
         configuration.addAllowedHeader("*");
+        configuration.addExposedHeader(JwtProperties.HEADER_STRING);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
