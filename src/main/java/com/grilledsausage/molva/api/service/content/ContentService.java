@@ -6,7 +6,9 @@ import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
 import com.grilledsausage.molva.api.entity.filmmaker.FilmmakerRepository;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.movie.MovieRepository;
+import com.grilledsausage.molva.exception.custom.MovieNotFoundByIdException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,4 +38,16 @@ public class ContentService {
 
     }
 
+
+    public Movie getMovieInfo(Long movieId) {
+
+        return movieRepository.findById(movieId).orElseThrow(
+                () -> MovieNotFoundByIdException
+                        .builder()
+                        .httpStatus(HttpStatus.BAD_REQUEST)
+                        .message("주어진 movieId에 해당하는 영화가 없습니다.")
+                        .build()
+        );
+
+    }
 }
