@@ -11,11 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Configuration
@@ -24,6 +19,7 @@ public class SecurityConfig {
 
     private final JwtProperties jwtProperties;
     private final UserService userService;
+    private final CorsConfig corsConfig;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -42,7 +38,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf().and().cors().disable()
+                .csrf().disable()
+//                .cors(AbstractHttpConfigurer::disable)
                 .formLogin().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/token").permitAll()
@@ -51,34 +48,21 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().disable()
+                .cacheControl().disable()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilter(corsConfig.corsFilter())
                 .addFilterBefore(new JwtRequestFilter(jwtProperties, userService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtRequestFilter.class)
 //                 .exceptionHandling()
 //                 .authenticationEntryPoint()
 //                 .accessDeniedHandler()
-//                .cors().configurationSource(corsConfigurationSource())
         ;
 
         return http.build();
 
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*", "http://localhost:8080", "http://ec2-3-38-49-6.ap-northeast-2.compute.amazonaws.com:80", "http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-
-        configuration.addAllowedHeader("*");
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-
-    }
 }

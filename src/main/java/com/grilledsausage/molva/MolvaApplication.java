@@ -14,6 +14,7 @@ public class MolvaApplication {
 		return new BCryptPasswordEncoder();
 	}
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(MolvaApplication.class, args);
 	}
