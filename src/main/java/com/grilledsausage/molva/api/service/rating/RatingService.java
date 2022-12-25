@@ -1,5 +1,6 @@
 package com.grilledsausage.molva.api.service.rating;
 
+import com.grilledsausage.molva.api.dto.rating.GetRatedMoviesResponseDto;
 import com.grilledsausage.molva.api.dto.rating.MovieRatingRequestDto;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.movie.MovieRepository;
@@ -11,10 +12,13 @@ import com.grilledsausage.molva.exception.custom.RatingNotFoundByIdException;
 import com.grilledsausage.molva.exception.custom.ValueOutOfBoundaryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -129,4 +133,25 @@ public class RatingService {
         }
 
     }
+
+    public List<GetRatedMoviesResponseDto> getRatedMovie(@AuthenticationPrincipal User user) {
+
+        List<Rating> ratingListFromUser = ratingRepository.findAllByUser_Id(user.getId());
+
+        return ratingListFromUser.stream().map(
+                x -> GetRatedMoviesResponseDto
+                        .from(movieRepository
+                                        .findById(x.getMovie().getId()).orElseThrow(
+                                                () -> MovieNotFoundByIdException
+                                                        .builder()
+                                                        .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                                                        .message("Rating의 영화의 PK로 영화를 찾을 수 없습니다.")
+                                                        .build()
+                                        )
+                                , x.getUserRating()
+                        )
+        ).collect(Collectors.toList());
+
+    }
+
 }
