@@ -1,11 +1,15 @@
 package com.grilledsausage.molva.api.entity.movie;
 
+import com.grilledsausage.molva.api.entity.participation.Participation;
+import com.grilledsausage.molva.api.entity.rating.Rating;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -57,15 +61,15 @@ public class Movie {
     @Column(name = "is_in_survey", nullable = false)
     private Boolean isInSurvey;
 
-//    양방향 조회가 필요할 때 추가하기
+    //    양방향 조회가 필요할 때 추가하기
 //    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
 //    private List<Reservation> reservations = new ArrayList<Reservation>();
 //
-//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-//    private List<Rating> ratings = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-//    private List<Participation> participations = new ArrayList<>();
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    private List<Rating> ratings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    private List<Participation> participations = new ArrayList<>();
 
     @Builder
     public Movie(Long code, String name, String englishName, Long year, String nation, String genre, String genreList, Long runTime, Double naverRating, Double reviewRating, String story, String image, Boolean isInSurvey) {

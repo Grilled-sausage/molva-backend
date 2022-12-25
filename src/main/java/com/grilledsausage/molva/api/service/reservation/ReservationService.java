@@ -1,8 +1,11 @@
 package com.grilledsausage.molva.api.service.reservation;
 
 
+import com.grilledsausage.molva.api.dto.reservation.GetReservedMoviesResponseDto;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.movie.MovieRepository;
+import com.grilledsausage.molva.api.entity.rating.Rating;
+import com.grilledsausage.molva.api.entity.rating.RatingRepository;
 import com.grilledsausage.molva.api.entity.reservation.Reservation;
 import com.grilledsausage.molva.api.entity.reservation.ReservationRepository;
 import com.grilledsausage.molva.api.entity.user.User;
@@ -14,6 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
@@ -21,6 +27,8 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
 
     private final MovieRepository movieRepository;
+
+    private final RatingRepository ratingRepository;
 
     @Transactional
     public Reservation reserveMovie(User user, Long movieId) {
@@ -79,4 +87,24 @@ public class ReservationService {
 
     }
 
+    public List<GetReservedMoviesResponseDto> getReservedMovie(User user) {
+        List<Reservation> reservationListFromUser = reservationRepository.findAllByUser_Id(user.getId());
+
+        List<GetReservedMoviesResponseDto> getReservedMoviesResponseDtoList
+                = reservationListFromUser.stream()
+                .map(x -> GetReservedMoviesResponseDto.from(x.getMovie(), 0.0))
+                .collect(Collectors.toList());
+
+        getReservedMoviesResponseDtoList.forEach(
+                x -> x.setRating(
+                        ratingRepository.findByUser_IdAndMovie_Id(
+                                user.getId(), x.getId()
+                        ).orElse(
+                                Rating.builder().userRating(0.0).build()
+                        ).getUserRating()
+                )
+        );
+
+        return getReservedMoviesResponseDtoList;
+    }
 }

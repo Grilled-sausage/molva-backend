@@ -1,6 +1,7 @@
 package com.grilledsausage.molva.api.service.preference;
 
 
+import com.grilledsausage.molva.api.dto.preference.GetPreferredFilmmakersResponseDto;
 import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
 import com.grilledsausage.molva.api.entity.filmmaker.FilmmakerRepository;
 import com.grilledsausage.molva.api.entity.preference.Preference;
@@ -8,11 +9,15 @@ import com.grilledsausage.molva.api.entity.preference.PreferenceRepository;
 import com.grilledsausage.molva.api.entity.user.User;
 import com.grilledsausage.molva.exception.custom.DuplicatedPreferenceException;
 import com.grilledsausage.molva.exception.custom.FilmmakerNotFoundByIdException;
+import com.grilledsausage.molva.exception.custom.InvalidFilmmakerTypeValueException;
 import com.grilledsausage.molva.exception.custom.PreferenceNotFoundByIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -81,4 +86,18 @@ public class PreferenceService {
 
     }
 
+    public List<GetPreferredFilmmakersResponseDto> getPreferredFilmmaker(User user, String type) {
+        if (!type.equals("감독") && !type.equals("배우")) {
+            throw InvalidFilmmakerTypeValueException
+                    .builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .message("type의 값이 감독 또는 배우가 아닙니다.")
+                    .build();
+        }
+
+        List<Preference> preferenceListFromUser = preferenceRepository.findAllByUser_Id(user.getId());
+        preferenceListFromUser.removeIf(p -> !p.getFilmmaker().getType().equals(type));
+
+        return preferenceListFromUser.stream().map(x -> GetPreferredFilmmakersResponseDto.from(x.getFilmmaker())).collect(Collectors.toList());
+    }
 }
