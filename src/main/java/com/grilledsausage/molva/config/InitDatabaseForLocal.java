@@ -4,6 +4,8 @@ import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
 import com.grilledsausage.molva.api.entity.filmmaker.FilmmakerRepository;
 import com.grilledsausage.molva.api.entity.movie.Movie;
 import com.grilledsausage.molva.api.entity.movie.MovieRepository;
+import com.grilledsausage.molva.api.entity.participation.Participation;
+import com.grilledsausage.molva.api.entity.participation.ParticipationRepository;
 import com.grilledsausage.molva.api.entity.user.User;
 import com.grilledsausage.molva.api.entity.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,8 @@ public class InitDatabaseForLocal {
         private final MovieRepository movieRepository;
 
         private final FilmmakerRepository filmmakerRepository;
+
+        private final ParticipationRepository participationRepository;
 
         @Transactional
         public void init() {
@@ -130,6 +134,99 @@ public class InitDatabaseForLocal {
                     .build();
 
             filmmakerRepository.save(filmmaker3);
+
+            Filmmaker filmmaker4 = Filmmaker
+                    .builder()
+                    .code(4L)
+                    .name("송현섭")
+                    .type("배우")
+                    .isInSurvey(false)
+                    .build();
+
+            filmmakerRepository.save(filmmaker4);
+
+            Filmmaker filmmaker5 = Filmmaker
+                    .builder()
+                    .code(5L)
+                    .name("임영준")
+                    .type("감독")
+                    .isInSurvey(false)
+                    .build();
+
+            filmmakerRepository.save(filmmaker5);
+
+            Filmmaker filmmaker6 = Filmmaker
+                    .builder()
+                    .code(6L)
+                    .name("김수동")
+                    .type("감독")
+                    .isInSurvey(false)
+                    .build();
+
+            filmmakerRepository.save(filmmaker6);
+
+            Participation participation1 = Participation
+                    .builder()
+                    .movie(movie1)
+                    .filmmaker(filmmaker1)
+                    .build();
+
+
+            participationRepository.save(participation1);
+
+            Participation participation2 = Participation
+                    .builder()
+                    .movie(movie1)
+                    .filmmaker(filmmaker2)
+                    .build();
+
+
+            participationRepository.save(participation2);
+
+            Participation participation3 = Participation
+                    .builder()
+                    .movie(movie2)
+                    .filmmaker(filmmaker3)
+                    .build();
+
+
+            participationRepository.save(participation3);
+
+            Participation participation4 = Participation
+                    .builder()
+                    .movie(movie1)
+                    .filmmaker(filmmaker4)
+                    .build();
+
+
+            participationRepository.save(participation4);
+
+            Participation participation5 = Participation
+                    .builder()
+                    .movie(movie1)
+                    .filmmaker(filmmaker5)
+                    .build();
+
+
+            participationRepository.save(participation5);
+
+            Participation participation6 = Participation
+                    .builder()
+                    .movie(movie1)
+                    .filmmaker(filmmaker6)
+                    .build();
+
+
+            participationRepository.save(participation6);
+
+            Participation participation7 = Participation
+                    .builder()
+                    .movie(movie2)
+                    .filmmaker(filmmaker6)
+                    .build();
+
+
+            participationRepository.save(participation7);
         }
 
     }

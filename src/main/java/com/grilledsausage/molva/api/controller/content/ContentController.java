@@ -3,9 +3,12 @@ package com.grilledsausage.molva.api.controller.content;
 import com.grilledsausage.molva.api.dto.content.MovieInfoResponseDto;
 import com.grilledsausage.molva.api.dto.content.SurveyFilmmakerResponseDto;
 import com.grilledsausage.molva.api.dto.content.SurveyMovieResponseDto;
+import com.grilledsausage.molva.api.entity.user.User;
 import com.grilledsausage.molva.api.service.content.ContentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +36,9 @@ public class ContentController {
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity<MovieInfoResponseDto> getMovieInfo(@PathVariable Long movieId) {
+    public ResponseEntity<MovieInfoResponseDto> getMovieInfo(@AuthenticationPrincipal User user, @PathVariable Long movieId) {
 
-        return ResponseEntity.ok(MovieInfoResponseDto.from(contentService.getMovieInfo(movieId)));
+        return ResponseEntity.ok(contentService.getMovieInfo(user, movieId));
     }
 
 }
