@@ -85,6 +85,10 @@ public class MovieInfoResponseDto {
         }
 
         public static FilmmakerInfoDto from(Filmmaker filmmaker) {
+            if (filmmaker == null) {
+                return null;
+            }
+
             return FilmmakerInfoDto
                     .builder()
                     .id(filmmaker.getId())
