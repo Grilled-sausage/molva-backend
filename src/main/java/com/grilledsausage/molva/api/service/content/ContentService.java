@@ -88,14 +88,7 @@ public class ContentService {
                 MovieInfoResponseDto.FilmmakerInfoDto.from(movieFromUserAndId
                         .getParticipations().stream().map(Participation::getFilmmaker)
                         .filter(x -> x.getType().equals("감독")).findFirst().orElse(
-                                Filmmaker
-                                        .builder()
-                                        .id(999L)
-                                        .name("없음")
-                                        .type("감독")
-                                        .image("없음")
-                                        .code(999L)
-                                        .build()
+                                null
                         )
                 )
         );
@@ -108,12 +101,19 @@ public class ContentService {
                         .collect(Collectors.toList());
 
         movieInfoResponseDtoFromId
-                .setActorInfoDtoList(actorInfoDtoList.subList(0, 6));
+                .setActorInfoDtoList(actorInfoDtoList.subList(0, Math.min(actorInfoDtoList.size(), 6)));
 
         // 6. FilmmakerDto에 선호 여부 넣기
         movieInfoResponseDtoFromId.getDirectorInfoDto().setIsPreferred(
-                user.getPreferences().stream().anyMatch(x -> x.getFilmmaker().getId().equals(movieInfoResponseDtoFromId.getDirectorInfoDto().getId()))
+                preferenceRepository.existsByUser_IdAndFilmmaker_Id(user.getId(), movieInfoResponseDtoFromId.getDirectorInfoDto().getId())
         );
+
+        movieInfoResponseDtoFromId.getActorInfoDtoList().forEach(
+                x -> x.setIsPreferred(preferenceRepository.existsByUser_IdAndFilmmaker_Id(user.getId(), x.getId()))
+        );
+
+        // 7. FilmmakerDto에 보고싶어요 표시 넣기
+        movieInfoResponseDtoFromId.setIsReserved(reservationRepository.existsByUser_IdAndMovie_Id(user.getId(), movieId));
 
         return movieInfoResponseDtoFromId;
 
