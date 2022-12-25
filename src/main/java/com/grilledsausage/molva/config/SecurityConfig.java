@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -25,6 +24,7 @@ public class SecurityConfig {
 
     private final JwtProperties jwtProperties;
     private final UserService userService;
+    private final CorsConfig corsConfig;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -44,7 +44,7 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
-                .cors(AbstractHttpConfigurer::disable)
+//                .cors(AbstractHttpConfigurer::disable)
                 .formLogin().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/token").permitAll()
@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilter(corsConfig.corsFilter())
                 .addFilterBefore(new JwtRequestFilter(jwtProperties, userService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtRequestFilter.class)
 //                 .exceptionHandling()
