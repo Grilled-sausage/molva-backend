@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class GetRatedMoviesResponseDto {
 
+    private Long id;
     private String name;
 
     private String genreList;
@@ -16,7 +17,8 @@ public class GetRatedMoviesResponseDto {
     private Double rating;
 
     @Builder
-    public GetRatedMoviesResponseDto(String name, String genreList, String image, Double rating) {
+    public GetRatedMoviesResponseDto(Long id, String name, String genreList, String image, Double rating) {
+        this.id = id;
         this.name = name;
         this.genreList = genreList;
         this.image = image;
@@ -26,6 +28,7 @@ public class GetRatedMoviesResponseDto {
     public static GetRatedMoviesResponseDto from(Movie movie, Double rating) {
         return GetRatedMoviesResponseDto
                 .builder()
+                .id(movie.getId())
                 .name(movie.getName())
                 .genreList(movie.getGenreList())
                 .image(movie.getImage())
