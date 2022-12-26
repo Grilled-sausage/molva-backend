@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class SurveyFilmmakerResponseDto {
 
+    private Long id;
     private Long code;
 
     private String name;
@@ -18,7 +19,8 @@ public class SurveyFilmmakerResponseDto {
     private Boolean isInSurvey;
 
     @Builder
-    public SurveyFilmmakerResponseDto(Long code, String name, String type, String image, Boolean isInSurvey) {
+    public SurveyFilmmakerResponseDto(Long id, Long code, String name, String type, String image, Boolean isInSurvey) {
+        this.id = id;
         this.code = code;
         this.name = name;
         this.type = type;
@@ -30,6 +32,7 @@ public class SurveyFilmmakerResponseDto {
 
         return SurveyFilmmakerResponseDto
                 .builder()
+                .id(filmmaker.getId())
                 .code(filmmaker.getCode())
                 .name(filmmaker.getName())
                 .type(filmmaker.getType())
