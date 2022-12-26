@@ -42,7 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable()
+                .csrf().and().cors().disable()
                 .formLogin().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/token").permitAll()
@@ -60,7 +60,8 @@ public class SecurityConfig {
 //                 .exceptionHandling()
 //                 .authenticationEntryPoint()
 //                 .accessDeniedHandler()
-                .cors().configurationSource(corsConfigurationSource());
+//                .cors().configurationSource(corsConfigurationSource())
+        ;
 
         return http.build();
 
@@ -70,8 +71,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(false); // 쿠키를 받을건지
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://ec2-3-38-49-6.ap-northeast-2.compute.amazonaws.com:80", "http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("*", "http://localhost:8080", "http://ec2-3-38-49-6.ap-northeast-2.compute.amazonaws.com:80", "http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 
         configuration.addAllowedHeader("*");

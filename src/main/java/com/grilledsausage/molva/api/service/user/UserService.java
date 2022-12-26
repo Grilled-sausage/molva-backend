@@ -12,6 +12,7 @@ import com.grilledsausage.molva.config.JwtProperties;
 import com.grilledsausage.molva.exception.custom.InvalidAuthorizationCodeException;
 import com.grilledsausage.molva.exception.custom.UserNotFoundByJwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class UserService {
 
@@ -70,6 +72,7 @@ public class UserService {
                     String.class
             );
         } catch (RuntimeException e) {
+            e.printStackTrace();
             throw InvalidAuthorizationCodeException
                     .builder()
                     .httpStatus(HttpStatus.BAD_REQUEST)
