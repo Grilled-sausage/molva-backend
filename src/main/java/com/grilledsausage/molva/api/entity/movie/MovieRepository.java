@@ -8,4 +8,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findAllByIsInSurveyTrue();
 
+    List<Movie> findAllByNameContains(String keyword);
+
 }

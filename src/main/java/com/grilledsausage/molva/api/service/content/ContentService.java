@@ -1,6 +1,7 @@
 package com.grilledsausage.molva.api.service.content;
 
 import com.grilledsausage.molva.api.dto.content.MovieInfoResponseDto;
+import com.grilledsausage.molva.api.dto.content.SearchedMovieResponseDto;
 import com.grilledsausage.molva.api.dto.content.SurveyFilmmakerResponseDto;
 import com.grilledsausage.molva.api.dto.content.SurveyMovieResponseDto;
 import com.grilledsausage.molva.api.entity.filmmaker.Filmmaker;
@@ -117,5 +118,26 @@ public class ContentService {
 
         return movieInfoResponseDtoFromId;
 
+    }
+
+    public List<SearchedMovieResponseDto> searchByName(String keyword) {
+        List<SearchedMovieResponseDto> searchedMovieResponseDtoList =
+                movieRepository.findAllByNameContains(keyword).stream().map(SearchedMovieResponseDto::from)
+                        .collect(Collectors.toList());
+
+        searchedMovieResponseDtoList.forEach(
+                x -> x.setRating(
+                        movieRepository.findById(x.getId()).orElseThrow(
+                                        () -> MovieNotFoundByIdException
+                                                .builder()
+                                                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                                                .message("영화의 PK로 영화를 찾을 수 없습니다.")
+                                                .build()
+                                ).getRatings().stream().map(Rating::getUserRating)
+                                .mapToDouble(val -> val).summaryStatistics().getAverage()
+                )
+        );
+
+        return searchedMovieResponseDtoList;
     }
 }
