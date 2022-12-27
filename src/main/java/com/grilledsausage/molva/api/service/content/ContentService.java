@@ -105,9 +105,10 @@ public class ContentService {
                 .setActorInfoDtoList(actorInfoDtoList.subList(0, Math.min(actorInfoDtoList.size(), 6)));
 
         // 6. FilmmakerDto에 선호 여부 넣기
-        movieInfoResponseDtoFromId.getDirectorInfoDto().setIsPreferred(
-                preferenceRepository.existsByUser_IdAndFilmmaker_Id(user.getId(), movieInfoResponseDtoFromId.getDirectorInfoDto().getId())
-        );
+        if (movieInfoResponseDtoFromId.getDirectorInfoDto() != null)
+            movieInfoResponseDtoFromId.getDirectorInfoDto().setIsPreferred(
+                    preferenceRepository.existsByUser_IdAndFilmmaker_Id(user.getId(), movieInfoResponseDtoFromId.getDirectorInfoDto().getId())
+            );
 
         movieInfoResponseDtoFromId.getActorInfoDtoList().forEach(
                 x -> x.setIsPreferred(preferenceRepository.existsByUser_IdAndFilmmaker_Id(user.getId(), x.getId()))
