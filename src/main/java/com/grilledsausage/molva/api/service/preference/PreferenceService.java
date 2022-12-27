@@ -98,9 +98,9 @@ public class PreferenceService {
         }
 
         List<Preference> preferenceListFromUser = preferenceRepository.findAllByUser_Id(user.getId());
-        log.info(preferenceListFromUser.toString());
+        preferenceListFromUser.forEach(x -> log.info(x.toString()));
         preferenceListFromUser.removeIf(p -> !p.getFilmmaker().getType().equals(type));
-        log.info(preferenceListFromUser.toString());
+        preferenceListFromUser.forEach(x -> log.info(x.toString()));
 
         return preferenceListFromUser.stream().map(x -> GetPreferredFilmmakersResponseDto.from(x.getFilmmaker())).collect(Collectors.toList());
     }
