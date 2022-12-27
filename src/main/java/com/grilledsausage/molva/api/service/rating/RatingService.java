@@ -12,7 +12,6 @@ import com.grilledsausage.molva.exception.custom.RatingNotFoundByIdException;
 import com.grilledsausage.molva.exception.custom.ValueOutOfBoundaryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -134,7 +133,7 @@ public class RatingService {
 
     }
 
-    public List<GetRatedMoviesResponseDto> getRatedMovie(@AuthenticationPrincipal User user) {
+    public List<GetRatedMoviesResponseDto> getRatedMovie(User user) {
 
         List<Rating> ratingListFromUser = ratingRepository.findAllByUser_Id(user.getId());
 
