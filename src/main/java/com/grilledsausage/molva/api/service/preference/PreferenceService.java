@@ -12,6 +12,7 @@ import com.grilledsausage.molva.exception.custom.FilmmakerNotFoundByIdException;
 import com.grilledsausage.molva.exception.custom.InvalidFilmmakerTypeValueException;
 import com.grilledsausage.molva.exception.custom.PreferenceNotFoundByIdException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class PreferenceService {
 
@@ -96,7 +98,9 @@ public class PreferenceService {
         }
 
         List<Preference> preferenceListFromUser = preferenceRepository.findAllByUser_Id(user.getId());
+        log.info(preferenceListFromUser.toString());
         preferenceListFromUser.removeIf(p -> !p.getFilmmaker().getType().equals(type));
+        log.info(preferenceListFromUser.toString());
 
         return preferenceListFromUser.stream().map(x -> GetPreferredFilmmakersResponseDto.from(x.getFilmmaker())).collect(Collectors.toList());
     }
