@@ -15,17 +15,31 @@ import com.grilledsausage.molva.api.entity.rating.Rating;
 import com.grilledsausage.molva.api.entity.rating.RatingRepository;
 import com.grilledsausage.molva.api.entity.reservation.ReservationRepository;
 import com.grilledsausage.molva.api.entity.user.User;
+import com.grilledsausage.molva.exception.custom.CustomException;
 import com.grilledsausage.molva.exception.custom.MovieNotFoundByIdException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class ContentService {
+
+    public static final URI
+            FLASK_URI = UriComponentsBuilder
+            .fromUriString("http://127.0.0.1:5000")
+            .path("/recommend")
+            .encode()
+            .build()
+            .toUri();
 
     private final MovieRepository movieRepository;
 
@@ -140,5 +154,39 @@ public class ContentService {
         );
 
         return searchedMovieResponseDtoList;
+    }
+
+    public List<SearchedMovieResponseDto> getRecommendedMovies(User user, String genreName) {
+
+        List<Long> movieCodeList = ratingRepository.findAllByUser_Id(user.getId()).stream()
+                .map(x -> x.getMovie().getCode()).collect(Collectors.toList());
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        List<String> result = restTemplate.postForObject(FLASK_URI, movieCodeList, List.class);
+
+        if (result == null) {
+            throw CustomException
+                    .builder()
+                    .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .message("Flask 서버와 통신 중 오류가 발생했습니다.")
+                    .build();
+        }
+
+//        log.info(result.toString());
+
+//        Long a = Long.parseLong(result.get(0));
+//        System.out.println(movieRepository.findByCode(a));
+
+        return result.stream()
+                .map(x -> movieRepository.findByCode(Long.parseLong(x)).orElseThrow(
+                        () -> MovieNotFoundByIdException
+                                .builder()
+                                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .message("영화의 code로 영화를 찾을 수 없습니다.")
+                                .build())
+                )
+                .map(SearchedMovieResponseDto::from).collect(Collectors.toList());
+
     }
 }
