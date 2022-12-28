@@ -156,7 +156,7 @@ public class ContentService {
         return searchedMovieResponseDtoList;
     }
 
-    public List<SearchedMovieResponseDto> getRecommendedMovies(User user, String genreName) {
+    public List<SearchedMovieResponseDto> getRecommendedMovies(User user) {
 
         List<Long> movieCodeList = ratingRepository.findAllByUser_Id(user.getId()).stream()
                 .map(x -> x.getMovie().getCode()).collect(Collectors.toList());

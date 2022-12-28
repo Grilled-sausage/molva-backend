@@ -41,8 +41,8 @@ public class ContentController {
     }
 
     @GetMapping("/main")
-    public ResponseEntity<List<SearchedMovieResponseDto>> getRecommendedMovies(@AuthenticationPrincipal User user, @RequestParam String genreName) {
-        return ResponseEntity.ok(contentService.getRecommendedMovies(user, genreName));
+    public ResponseEntity<List<SearchedMovieResponseDto>> getRecommendedMovies(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(contentService.getRecommendedMovies(user));
     }
 
 }
