@@ -173,7 +173,7 @@ public class ContentService {
                     .build();
         }
 
-        result = result.subList(0, 1200);
+        result = result.subList(0, 600);
 
 //        log.info(result.toString());
 
