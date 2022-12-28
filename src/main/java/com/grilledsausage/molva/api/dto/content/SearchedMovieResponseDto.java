@@ -10,6 +10,8 @@ public class SearchedMovieResponseDto {
 
     private String name;
 
+    private String genre;
+
     private String genreList;
 
     private Double rating;
@@ -17,9 +19,10 @@ public class SearchedMovieResponseDto {
     private String image;
 
     @Builder
-    public SearchedMovieResponseDto(Long id, String name, String genreList, Double rating, String image) {
+    public SearchedMovieResponseDto(Long id, String name, String genre, String genreList, Double rating, String image) {
         this.id = id;
         this.name = name;
+        this.genre = genre;
         this.genreList = genreList;
         this.rating = rating;
         this.image = image;
@@ -30,6 +33,7 @@ public class SearchedMovieResponseDto {
                 .builder()
                 .id(movie.getId())
                 .name(movie.getName())
+                .genre(movie.getGenre())
                 .genreList(movie.getGenreList())
                 .image(movie.getImage())
                 .build();
