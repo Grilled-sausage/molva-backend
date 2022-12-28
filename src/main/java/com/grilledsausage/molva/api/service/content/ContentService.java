@@ -163,7 +163,7 @@ public class ContentService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        List<String> result = restTemplate.postForObject(FLASK_URI, movieCodeList, List.class);
+        List<Integer> result = restTemplate.postForObject(FLASK_URI, movieCodeList, List.class);
 
         if (result == null) {
             throw CustomException
@@ -173,13 +173,12 @@ public class ContentService {
                     .build();
         }
 
+        result = result.subList(0, 600);
+
 //        log.info(result.toString());
 
-//        Long a = Long.parseLong(result.get(0));
-//        System.out.println(movieRepository.findByCode(a));
-
         return result.stream()
-                .map(x -> movieRepository.findByCode(Long.parseLong(x)).orElseThrow(
+                .map(x -> movieRepository.findByCode(Long.valueOf(x)).orElseThrow(
                         () -> MovieNotFoundByIdException
                                 .builder()
                                 .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
