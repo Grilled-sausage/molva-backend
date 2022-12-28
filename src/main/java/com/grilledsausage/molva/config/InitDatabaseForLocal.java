@@ -62,14 +62,14 @@ public class InitDatabaseForLocal {
 
             Movie movie1 = Movie
                     .builder()
-                    .code(20228230L)
-                    .name("요정")
+                    .code(19900248L)
+                    .name("빽 투 더 퓨쳐")
                     .englishName("Fairy")
-                    .year(2022L)
-                    .nation("한국")
-                    .genre("드라마")
-                    .genreList("드라마")
-                    .runTime(79L)
+                    .year(1990L)
+                    .nation("미국")
+                    .genre("SF")
+                    .genreList("SF,코미디,어드벤처")
+                    .runTime(117L)
                     .isInSurvey(true)
                     .build();
 
@@ -77,13 +77,13 @@ public class InitDatabaseForLocal {
 
             Movie movie2 = Movie
                     .builder()
-                    .code(20224755L)
-                    .name("나는 마을 방과후 교사입니다")
+                    .code(19900204L)
+                    .name("죽은 시인의 사회")
                     .englishName("The Teachers: pink, nature trail, ridge between rice paddies, plum")
-                    .year(2022L)
-                    .nation("한국")
-                    .genre("다큐멘터리")
-                    .genreList("다큐멘터리")
+                    .year(1989L)
+                    .nation("미국")
+                    .genre("드라마")
+                    .genreList("드라마")
                     .runTime(94L)
                     .isInSurvey(true)
                     .build();
