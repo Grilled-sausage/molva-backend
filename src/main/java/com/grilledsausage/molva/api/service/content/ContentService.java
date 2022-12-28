@@ -163,7 +163,7 @@ public class ContentService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        List<Integer> result = restTemplate.postForObject(FLASK_URI, movieCodeList, List.class);
+        List<String> result = restTemplate.postForObject(FLASK_URI, movieCodeList, List.class);
 
         if (result == null) {
             throw CustomException
@@ -178,7 +178,7 @@ public class ContentService {
 //        log.info(result.toString());
 
         return result.stream()
-                .map(x -> movieRepository.findByCode(Long.valueOf(x)).orElseThrow(
+                .map(x -> movieRepository.findByCode(Long.parseLong(x)).orElseThrow(
                         () -> MovieNotFoundByIdException
                                 .builder()
                                 .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
