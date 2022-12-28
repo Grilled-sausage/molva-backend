@@ -22,25 +22,27 @@ public class ContentController {
 
     @GetMapping("/survey/movie")
     public List<SurveyMovieResponseDto> getSurveyMovieList() {
-
         return contentService.getSurveyMovieList();
     }
 
     @GetMapping("/survey/filmmaker")
     public List<SurveyFilmmakerResponseDto> getSurveyFilmmakerList() {
-
         return contentService.getSurveyFilmmakerList();
     }
 
     @GetMapping("/{movieId}")
     public ResponseEntity<MovieInfoResponseDto> getMovieInfo(@AuthenticationPrincipal User user, @PathVariable Long movieId) {
-
         return ResponseEntity.ok(contentService.getMovieInfo(user, movieId));
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<SearchedMovieResponseDto>> searchByName(@RequestParam String keyword) {
         return ResponseEntity.ok(contentService.searchByName(keyword));
+    }
+
+    @GetMapping("/main")
+    public ResponseEntity<List<SearchedMovieResponseDto>> getRecommendedMovies(@AuthenticationPrincipal User user, @RequestParam String genreName) {
+        return ResponseEntity.ok(contentService.getRecommendedMovies(user, genreName));
     }
 
 }
